@@ -110,8 +110,7 @@ public class Parsing {
                         }   else if(attributesList.size()==0)    {
                             outpuut.write(attributeJson.toString());
                             outpuut.newLine();
-                        }
-                        else {
+                        }   else {
                             attributeJson.put(key1, attributesList);
                             outpuut.write(attributeJson.toString());
                             outpuut.newLine();

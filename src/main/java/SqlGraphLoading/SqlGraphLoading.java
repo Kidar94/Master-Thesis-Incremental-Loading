@@ -3,8 +3,8 @@ package SqlGraphLoading;
 import Configuration.SqlGraphConfiguration;
 import Input.Input;
 import Parsing.Parsing;
-import Preprocessing.Preprocessing;
-import Relabeling.Relabeling;
+import Preprocessing.*;
+import Relabeling.*;
 import com.opencsv.CSVReader;
 
 import java.io.*;
@@ -27,6 +27,9 @@ public class SqlGraphLoading {
         ArrayList<String> relationshipArray=csvFileNames.get("RelationshipFile");
         ArrayList<String> filesToMerge=new ArrayList<>();
         String vertexesOutput=sqlGraphConfiguration.getVertexesOutput();
+        ArrayList<String> relationshipDivided= new ArrayList<>();
+        ArrayList<String> relationshipFiles= new ArrayList<>();
+        HashMap<String,ArrayList> relationshipPerVertexType= new HashMap<>();
 
         for(String vertex:vertexArray)  {
             int indx=vertex.indexOf("_");
@@ -48,8 +51,53 @@ public class SqlGraphLoading {
             }
             filesToMerge.add(outputParsingVertex);
         }
+
+        for(String relationship:relationshipArray)  {
+            int indx=relationship.indexOf("0");
+            String filePath=in+"/"+relationship+".csv";
+            Preprocessing relationshipSorting= new Preprocessing(filePath);
+            String outputPreprocessingRelationship=relationshipSorting.externalSorting();
+            RelationshipPreprocessing relationshipPreprocessing= new RelationshipPreprocessing();
+            relationshipDivided=relationshipPreprocessing.relationshipDivide(outputPreprocessingRelationship);
+            relationshipFiles.add(relationshipDivided.get(0));
+            relationshipFiles.add(relationshipDivided.get(1));
+
+        }
+
+
+        for(String vertex:vertexArray)  {
+            String in1=in+"/";
+            int indx=vertex.indexOf("_0_0");
+            vertex=vertex.substring(0,indx);
+            ArrayList<String> relationshipPerType= new ArrayList<>();
+            for(String relationship:relationshipFiles)  {
+                String relationship1=relationship;
+                File f= new File(relationship);
+                relationship=f.getName();
+                if(relationship.contains("source"))    {
+                    int indx1=relationship.indexOf("_");
+                    relationship=relationship.substring(0,indx1);
+                }   else    {
+                    int indx1=relationship.indexOf("_");
+                    relationship=relationship.substring(indx1+1);
+                    indx1=relationship.indexOf("_");
+                    relationship=relationship.substring(indx1+1);
+                    indx1=relationship.indexOf("_");
+                    relationship=relationship.substring(0,indx1);
+                }
+                if(vertex.equals(relationship)) {
+                    relationshipPerType.add(relationship1);
+                }
+            }
+            relationshipPerVertexType.put(vertex,relationshipPerType);
+        }
         Relabeling relabeling= new Relabeling();
-        String mergeVertexes=relabeling.attributingNewIds(filesToMerge, vertexesOutput);
+       ArrayList<String> relabeledFiles=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType);
+       
+       // RelationshipRelabeling relationshipRelabeling= new RelationshipRelabeling();
+      //  relationshipRelabeling.verticesRelabeling(relationshipPerVertexType, relabeledFiles);
+
+
         int debug;
         debug=1;
     }

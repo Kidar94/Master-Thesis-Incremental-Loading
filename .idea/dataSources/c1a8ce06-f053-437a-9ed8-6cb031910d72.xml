@@ -58,8 +58,8 @@
     <schema id="19" parent="1" name="MT">
       <ObjectId>104</ObjectId>
       <CreatedTimestamp>2019-11-02.10:50:05</CreatedTimestamp>
-      <ModifiedTimestamp>2020-03-08.13:12:42</ModifiedTimestamp>
-      <IntrospectionTimestamp>2020-03-08.13:12:47</IntrospectionTimestamp>
+      <ModifiedTimestamp>2020-03-08.14:58:41</ModifiedTimestamp>
+      <IntrospectionTimestamp>2020-03-09.12:20:24</IntrospectionTimestamp>
       <Current>1</Current>
     </schema>
     <schema id="20" parent="1" name="OJVMSYS">
@@ -168,7 +168,7 @@
     <table id="47" parent="19" name="VERTICES">
       <ObjectId>73869</ObjectId>
       <CreatedTimestamp>2020-03-08.13:12:42</CreatedTimestamp>
-      <ModifiedTimestamp>2020-03-08.13:12:42</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-03-08.14:58:41</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <collection-type id="48" parent="19" name="NODELIST">
@@ -49591,7 +49591,7 @@
       <ObjectId>73872</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2020-03-08.13:12:42</CreatedTimestamp>
-      <ModifiedTimestamp>2020-03-08.13:12:42</ModifiedTimestamp>
+      <ModifiedTimestamp>2020-03-08.14:58:41</ModifiedTimestamp>
       <TablespaceName>USERS</TablespaceName>
       <ColNames>VERTEX_ID</ColNames>
       <Unique>1</Unique>
