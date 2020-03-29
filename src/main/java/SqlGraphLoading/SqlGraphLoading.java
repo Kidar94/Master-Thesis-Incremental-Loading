@@ -92,8 +92,8 @@ public class SqlGraphLoading {
             relationshipPerVertexType.put(vertex,relationshipPerType);
         }
         Relabeling relabeling= new Relabeling();
-       ArrayList<String> relabeledFiles=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType);
-       
+       ArrayList<String> relabeledFiles=relabeling.attributingNewIds3(filesToMerge, vertexesOutput, relationshipPerVertexType);
+
        // RelationshipRelabeling relationshipRelabeling= new RelationshipRelabeling();
       //  relationshipRelabeling.verticesRelabeling(relationshipPerVertexType, relabeledFiles);
 
