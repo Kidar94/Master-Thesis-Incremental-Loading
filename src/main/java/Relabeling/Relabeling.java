@@ -29,13 +29,13 @@ public class Relabeling {
             output=tempFileOutput.getPath();
             int indxName=fileInputName.indexOf("_");
             String vertexesType=fileInputName.substring(0,indxName);
+            Long firstId=i;
 
             try {
                 bw = new BufferedWriter(new FileWriter(output));
                 br = new BufferedReader(new FileReader(path));
                 String line = "";
                 while ((line = br.readLine()) != null) {
-                    i++;
                     bw.write(i + "|" + line);
                     bw.newLine();
                     int indx2= line.indexOf("\"id\":\"");
@@ -43,6 +43,7 @@ public class Relabeling {
                     indx2=line.indexOf("\"");
                     id=line.substring(0,indx2);
                     newLabels.add(id);
+                    i++;
                 }
                 String typeRelationship="";
                 ArrayList<String> relationshipPaths= new ArrayList<>();
@@ -54,7 +55,7 @@ public class Relabeling {
                 relationshipPaths=relationshipPerVertexType.get(typeRelationship);
 
                 for(String relationshipPath:relationshipPaths)    {
-                    relationshipRelabeling.relabeling(relationshipPath, newLabels);
+                    relationshipRelabeling.relabeling(relationshipPath, newLabels, firstId);
 
                 }
 

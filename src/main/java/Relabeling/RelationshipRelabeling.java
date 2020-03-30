@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class RelationshipRelabeling {
 
-    public void relabeling(String relationshipPath, ArrayList<String> newLabels)    throws IOException   {
+    public void relabeling(String relationshipPath, ArrayList<String> newLabels, Long firstIdInt)    throws IOException   {
         BufferedReader brRelationships=null;
         BufferedWriter bwRelationships=null;
 
@@ -17,12 +17,10 @@ public class RelationshipRelabeling {
             String id1="";
             String id2="";
             Integer tmp=0;
-            int i=0;
+            Long newId=0l;
 
             while((line1=brRelationships.readLine())!=null)  {
-                i++;
                 id1 = line1;
-                String line2 = "";
 
                 int min=0;
                 int max=newLabels.size();
@@ -46,7 +44,8 @@ public class RelationshipRelabeling {
                     bool2=tmp<newLabels.size()-1;
                 }
                 if(bool)    {
-                    bwRelationships.write(tmp.toString());
+                    newId=firstIdInt+tmp;
+                    bwRelationships.write(newId.toString());
                     bwRelationships.newLine();
                 }
             }
@@ -63,9 +62,6 @@ public class RelationshipRelabeling {
             }
 
         }
-
-
-
     }
 
 }
