@@ -33,20 +33,14 @@ public class RelationshipPreprocessing {
             bw1= new BufferedWriter(new FileWriter(output1));
             bw2= new BufferedWriter(new FileWriter(output2));
 
-            String line=br.readLine();
+            String line="";
             while((line=br.readLine())!=null)   {
                 int indx=line.indexOf("|");
                 String source=line.substring(0,indx);
                 bw1.write(source);
                 bw1.newLine();
                 line=line.substring(indx+1);
-                indx=line.indexOf("|");
-                String target="";
-                if(indx>0)  {
-                    target=line.substring(0,indx);
-                }   else    {
-                    target=line;
-                }
+                String target=line;
                 bw2.write(target);
                 bw2.newLine();
             }

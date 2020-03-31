@@ -12,14 +12,27 @@ public class RelationshipRelabeling {
         try {
             brRelationships= new BufferedReader(new FileReader(relationshipPath));
             bwRelationships= new BufferedWriter(new FileWriter(relationshipPath+"relabeled2.csv"));
-            String line1="";
+            String line1=brRelationships.readLine();
+            int indxAttributes=line1.indexOf("|");
+            String line2="";
+            Boolean attributes=false;
+            if(indxAttributes>0)    {
+                attributes=true;
+            }
+            bwRelationships.write(line1);
+            bwRelationships.newLine();
 
             String id1="";
             String id2="";
             Integer tmp=0;
-            Long newId=0l;
+            Long newId=0L;
 
             while((line1=brRelationships.readLine())!=null)  {
+                if(attributes)  {
+                    indxAttributes=line1.indexOf("|");
+                    line2=line1.substring(indxAttributes);
+                    line1=line1.substring(0,indxAttributes);
+                }
                 id1 = line1;
 
                 int min=0;
@@ -45,7 +58,7 @@ public class RelationshipRelabeling {
                 }
                 if(bool)    {
                     newId=firstIdInt+tmp;
-                    bwRelationships.write(newId.toString());
+                    bwRelationships.write(newId.toString()+line2);
                     bwRelationships.newLine();
                 }
             }
