@@ -5,13 +5,21 @@ import java.util.ArrayList;
 
 public class RelationshipRelabeling {
 
-    public void relabeling(String relationshipPath, ArrayList<String> newLabels, Long firstIdInt)    throws IOException   {
+    private String newName="";
+
+    public String relabeling(String relationshipPath, ArrayList<String> newLabels, Long firstIdInt)    throws IOException   {
         BufferedReader brRelationships=null;
         BufferedWriter bwRelationships=null;
 
         try {
             brRelationships= new BufferedReader(new FileReader(relationshipPath));
-            bwRelationships= new BufferedWriter(new FileWriter(relationshipPath+"relabeled2.csv"));
+
+            File fileInput= new File(relationshipPath);
+            String fileInputName=fileInput.getName();
+            File tempFileOutput = File.createTempFile(fileInputName, "relabeledRelationship.csv", new File("D:/MT/Import/Test/tmp"));
+            tempFileOutput.deleteOnExit();
+            newName=tempFileOutput.getPath();
+            bwRelationships= new BufferedWriter(new FileWriter(newName));
             String line1=brRelationships.readLine();
             int indxAttributes=line1.indexOf("|");
             String line2="";
@@ -54,7 +62,7 @@ public class RelationshipRelabeling {
                         max=tmp-1;
                     }
                     bool = id1.equals(id2);
-                    bool2=tmp<newLabels.size()-1;
+                    bool2=tmp<=newLabels.size()-1;
                 }
                 if(bool)    {
                     newId=firstIdInt+tmp;
@@ -62,7 +70,6 @@ public class RelationshipRelabeling {
                     bwRelationships.newLine();
                 }
             }
-
         }   catch(IOException e)    {
             e.printStackTrace();
         }   finally {
@@ -75,6 +82,6 @@ public class RelationshipRelabeling {
             }
 
         }
+        return newName;
     }
-
 }

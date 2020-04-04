@@ -30,6 +30,7 @@ public class SqlGraphLoading {
         ArrayList<String> relationshipDivided= new ArrayList<>();
         ArrayList<String> relationshipFiles= new ArrayList<>();
         HashMap<String,ArrayList> relationshipPerVertexType= new HashMap<>();
+        ArrayList<String> relationshipNamesList= new ArrayList<>();
 
         for(String vertex:vertexArray)  {
             int indx=vertex.indexOf("_");
@@ -54,6 +55,7 @@ public class SqlGraphLoading {
 
         for(String relationship:relationshipArray)  {
             int indx=relationship.indexOf("0");
+            relationshipNamesList.add(relationship.substring(0,indx));
             String filePath=in+"/"+relationship+".csv";
             Preprocessing relationshipSorting= new Preprocessing(filePath);
             String outputPreprocessingRelationship=relationshipSorting.externalSorting();
@@ -61,9 +63,7 @@ public class SqlGraphLoading {
             relationshipDivided=relationshipPreprocessing.relationshipDivide(outputPreprocessingRelationship);
             relationshipFiles.add(relationshipDivided.get(0));
             relationshipFiles.add(relationshipDivided.get(1));
-
         }
-
 
         for(String vertex:vertexArray)  {
             String in1=in+"/";
@@ -92,8 +92,7 @@ public class SqlGraphLoading {
             relationshipPerVertexType.put(vertex,relationshipPerType);
         }
         Relabeling relabeling= new Relabeling();
-       ArrayList<String> relabeledFiles=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType);
-
+       ArrayList<String> relabeledFiles=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType, relationshipNamesList);
 
         int debug;
         debug=1;
