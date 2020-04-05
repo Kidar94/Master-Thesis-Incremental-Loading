@@ -36,8 +36,8 @@ public class RelationshipRelabeling {
             Long newId=0L;
 
             while((line1=brRelationships.readLine())!=null)  {
-                if(attributes)  {
-                    indxAttributes=line1.indexOf("|");
+                indxAttributes=line1.indexOf("|");
+                if(indxAttributes>0)  {
                     line2=line1.substring(indxAttributes);
                     line1=line1.substring(0,indxAttributes);
                 }
