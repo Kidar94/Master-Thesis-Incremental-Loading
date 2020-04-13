@@ -1,9 +1,13 @@
 package Preprocessing;
 
+import Configuration.SqlGraphConfiguration;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class RelationshipPreprocessing {
+    private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
+    private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
 
     public RelationshipPreprocessing() {
 
@@ -20,13 +24,13 @@ public class RelationshipPreprocessing {
         try {
             File fileInput= new File(fileName);
             String fileInputName1=fileInput.getName();
-            File tempFileOutput1 = File.createTempFile(fileInputName1, "divided_source.csv", new File("D:/MT/Import/Test/tmp"));
+            File tempFileOutput1 = File.createTempFile(fileInputName1, "divided_source.csv", new File(tmpDirectory));
             tempFileOutput1.deleteOnExit();
             output1=tempFileOutput1.getPath();
 
             File fileInput2= new File(fileName);
             String fileInputName2=fileInput.getName();
-            File tempFileOutput2 = File.createTempFile(fileInputName2, "divided_target.csv", new File("D:/MT/Import/Test/tmp"));
+            File tempFileOutput2 = File.createTempFile(fileInputName2, "divided_target.csv", new File(tmpDirectory));
             tempFileOutput2.deleteOnExit();
             output2=tempFileOutput2.getPath();
             boolean bool=false;

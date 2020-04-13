@@ -1,40 +1,47 @@
 package Relabeling;
 
+import Configuration.SqlGraphConfiguration;
+
 import java.io.*;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Relabeling {
+    private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
+    private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
+    private String outputDirectory=sqlGraphConfiguration.getVertexesOutput();
+
     public Relabeling() {}
 
-    public ArrayList<String> attributingNewIds(ArrayList<String> filesToMerge, String vertexesOutput, HashMap<String, ArrayList> relationshipPerVertexType, ArrayList<String> relationshipNamesList)  throws IOException {
+    public ArrayList<ArrayList> attributingNewIds(ArrayList<String> filesToMerge, String vertexesOutput, HashMap<String, ArrayList> relationshipPerVertexType, ArrayList<String> relationshipNamesList)  throws IOException {
         BufferedWriter bw = null;
         BufferedReader br = null;
         BufferedReader brRelationships=null;
         BufferedWriter bwRelationships=null;
         String mergeVertexes = vertexesOutput + "/vertexes.csv";
-        String output = "";
         ArrayList<String> outputFiles= new ArrayList<>();
         String id="";
         Long i = 0L;
         RelationshipRelabeling relationshipRelabeling= new RelationshipRelabeling();
         ArrayList<String> dividedRelationshipList= new ArrayList<>();
         ArrayList<String> newLabels= null;
+        ArrayList<String> vertexesTypeIds= new ArrayList<>();
+        ArrayList<String>   relationshipList= new ArrayList<>();
+
+        ArrayList<ArrayList> output= new ArrayList<>();
 
         try {
-            bw = new BufferedWriter(new FileWriter("D:/MT/Import/Test/outputVertexes.csv"));
+            String vertexesoutputFileName=outputDirectory+"/vertexes.csv";
+            bw = new BufferedWriter(new FileWriter(vertexesoutputFileName));
             for (String path : filesToMerge) {
                 newLabels= new ArrayList<>();
                 File fileInput= new File(path);
                 String fileInputName=fileInput.getName();
-                //File tempFileOutput = File.createTempFile(fileInputName, "relabeled.csv", new File("D:/MT/Import/Test/tmp"));
-                //tempFileOutput.deleteOnExit();
-                //output=tempFileOutput.getPath();
                 int indxName=fileInputName.indexOf("_");
                 String vertexesType=fileInputName.substring(0,indxName);
                 Long firstId=i;
                 String newFile="";
+                String firstlastId=i.toString();
 
                 try {
                     br = new BufferedReader(new FileReader(path));
@@ -49,6 +56,9 @@ public class Relabeling {
                         newLabels.add(id);
                         i++;
                     }
+                    Long i2=i-1;
+                    firstlastId=firstlastId+"-"+i2.toString();
+                    vertexesTypeIds.add(vertexesType+"|"+firstlastId);
                     String typeRelationship="";
                     ArrayList<String> relationshipPaths= new ArrayList<>();
 
@@ -63,7 +73,6 @@ public class Relabeling {
                         newFile=relationshipRelabeling.relabeling(relationshipPath, newLabels, firstId);
                         dividedRelationshipList.add(newFile);
                     }
-                    outputFiles.add(output);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -85,6 +94,7 @@ public class Relabeling {
         String newName="";
         ArrayList<String> sourceTargetNames=null;
         BufferedWriter bwEdges=null;
+        BufferedWriter  bwEdgesSubFile=null;
         BufferedReader brSource=null;
         BufferedReader brTarget=null;
         String lineSource;
@@ -108,8 +118,8 @@ public class Relabeling {
 
 
         try {
-            bwEdges= new BufferedWriter(new FileWriter("D:/MT/Import/Test/outputEdges.csv"));
-            
+            String edgesoutputFileName=outputDirectory+"/edges.csv";
+            bwEdges= new BufferedWriter(new FileWriter(edgesoutputFileName));
 
             for(ArrayList<String> sourceTarget:newNames) {
                 try {
@@ -120,6 +130,18 @@ public class Relabeling {
                         brSource=new BufferedReader(new FileReader(sourceTarget.get(1)));
                         brTarget=new BufferedReader(new FileReader(sourceTarget.get(0)));
                     }
+                    File file= new  File(sourceTarget.get(0));
+                    String fileName2=file.getName();
+
+                    int indexName=fileName2.indexOf("_");
+                    int indexName2=fileName2.indexOf("_", indexName+1);
+                    int indexName3=fileName2.indexOf("_", indexName2+1);
+                    String relationshipName=fileName2.substring(0,indexName3);
+                    File tempFileOutput=file.createTempFile(relationshipName, "relabeled.csv", new File(tmpDirectory));
+                    tempFileOutput.deleteOnExit();
+                    String path=tempFileOutput.getPath();
+                    bwEdgesSubFile= new BufferedWriter(new FileWriter(path));
+                    relationshipList.add(path);
                     String filePath=sourceTarget.get(0);
                     File fileInput=new File(filePath);
                     String fileName=fileInput.getName();
@@ -146,6 +168,8 @@ public class Relabeling {
                         newLine=edgesId.toString()+"|"+lineSource+"|"+lineTarget;
                         bwEdges.write(newLine);
                         bwEdges.newLine();
+                        bwEdgesSubFile.write(newLine);
+                        bwEdgesSubFile.newLine();
                         edgesId++;
                     }
 
@@ -158,6 +182,9 @@ public class Relabeling {
                     if(brTarget!=null)  {
                         brTarget.close();
                     }
+                    if(bwEdgesSubFile!=null)    {
+                        bwEdgesSubFile.close();
+                    }
                 }
 
             }
@@ -169,6 +196,8 @@ public class Relabeling {
             }
         }
         int debug=0;
-        return outputFiles;
+        output.add(vertexesTypeIds);
+        output.add(relationshipList);
+        return output;
     }
 }

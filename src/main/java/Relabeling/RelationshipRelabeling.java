@@ -1,11 +1,16 @@
 package Relabeling;
 
+import Configuration.SqlGraphConfiguration;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class RelationshipRelabeling {
 
     private String newName="";
+    private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
+    private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
+
 
     public String relabeling(String relationshipPath, ArrayList<String> newLabels, Long firstIdInt)    throws IOException   {
         BufferedReader brRelationships=null;
@@ -16,7 +21,7 @@ public class RelationshipRelabeling {
 
             File fileInput= new File(relationshipPath);
             String fileInputName=fileInput.getName();
-            File tempFileOutput = File.createTempFile(fileInputName, "relabeledRelationship.csv", new File("D:/MT/Import/Test/tmp"));
+            File tempFileOutput = File.createTempFile(fileInputName, "relabeledRelationship.csv", new File(tmpDirectory));
             tempFileOutput.deleteOnExit();
             newName=tempFileOutput.getPath();
             bwRelationships= new BufferedWriter(new FileWriter(newName));

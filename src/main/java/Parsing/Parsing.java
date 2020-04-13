@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import Configuration.SqlGraphConfiguration;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,8 +13,11 @@ import org.json.JSONObject;
 public class Parsing {
     private String output;
 
-    JSONObject attributeJson=null;
-    JSONArray atttributeJson2= null;
+    private JSONObject attributeJson=null;
+    private JSONArray atttributeJson2= null;
+    private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
+    private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
+
 
 
     public Parsing()   {
@@ -26,7 +31,7 @@ public class Parsing {
         try {
             File fileInput= new File(input);
             String fileInputName=fileInput.getName();
-            File tempFileOutput = File.createTempFile(fileInputName, "parsed.csv", new File("D:/MT/Import/Test/tmp"));
+            File tempFileOutput = File.createTempFile(fileInputName, "parsed.csv", new File(tmpDirectory));
             tempFileOutput.deleteOnExit();
             output=tempFileOutput.getPath();
             br=new BufferedReader(new FileReader(input));
@@ -85,7 +90,7 @@ public class Parsing {
 
             File fileInput= new File(sortedAttributeFile);
             String fileInputName=fileInput.getName();
-            File tempFileOutput = File.createTempFile(fileInputName, "added.csv", new File("D:/MT/Import/Test/tmp"));
+            File tempFileOutput = File.createTempFile(fileInputName, "added.csv", new File(tmpDirectory));
             tempFileOutput.deleteOnExit();
             output2=tempFileOutput.getPath();
             outpuut= new BufferedWriter(new FileWriter(output2));
@@ -125,7 +130,6 @@ public class Parsing {
                     }
                 }
                 if(bool)    {
-                    //attributeJson.put(key1,value1);
                     attributesList.add(value1);
                 }
             }

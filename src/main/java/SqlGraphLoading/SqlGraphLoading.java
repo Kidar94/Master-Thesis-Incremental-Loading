@@ -91,8 +91,37 @@ public class SqlGraphLoading {
             }
             relationshipPerVertexType.put(vertex,relationshipPerType);
         }
+
         Relabeling relabeling= new Relabeling();
-       ArrayList<String> relabeledFiles=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType, relationshipNamesList);
+        ArrayList<ArrayList> relabelingOutput=relabeling.attributingNewIds(filesToMerge, vertexesOutput, relationshipPerVertexType, relationshipNamesList);
+        ArrayList<String>   vertexesTypeIds=relabelingOutput.get(0);
+        ArrayList<String>   relationshipList=relabelingOutput.get(1);
+
+        String outgoingMappingCsvFile=sqlGraphConfiguration.getOutgoingLabelsMapping();
+        HashMap<String, Integer>    mappingLabelsColumns=new HashMap<>();
+        BufferedReader  outgoingMappingReader=null;
+
+        try {
+            outgoingMappingReader= new BufferedReader(new FileReader(outgoingMappingCsvFile));
+            String line="";
+            String key="";
+            String valueString="";
+            int indx;
+            while((line=outgoingMappingReader.readLine())!=null)   {
+                indx=line.indexOf("|");
+                key=line.substring(0,indx);
+                valueString=line.substring(indx+1);
+                mappingLabelsColumns.put(key, Integer.valueOf(valueString));
+            }
+        }   catch(IOException e)    {
+            e.printStackTrace();
+        }   finally {
+            if(outgoingMappingReader!=null) {
+                outgoingMappingReader.close();
+            }
+        }
+        OALoading oaLoading=new OALoading();
+        oaLoading.OALoadingTable(relationshipList, mappingLabelsColumns, vertexesTypeIds);
 
         int debug;
         debug=1;
