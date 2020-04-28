@@ -121,7 +121,7 @@ public class SqlGraphLoading {
             }
         }
         OALoading oaLoading=new OALoading();
-        oaLoading.OALoadingTable(relationshipList, mappingLabelsColumns, vertexesTypeIds);
+        oaLoading.OALoadingTable(vertexesOutput,relationshipList, mappingLabelsColumns, vertexesTypeIds);
 
         int debug;
         debug=1;
