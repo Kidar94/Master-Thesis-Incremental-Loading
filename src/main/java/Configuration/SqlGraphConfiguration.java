@@ -11,6 +11,7 @@ public class SqlGraphConfiguration {
     private static String DATASETFILES;
     private static String VERTEXESOUTPUT;
     private static String OUTGOINGLABELSMAPPING;
+    private static String INCOMINGLABELSMAPPING;
     private static String TMPDIRECTORY;
     public SqlGraphConfiguration()  {
         Properties configProperties= new Properties();
@@ -22,6 +23,7 @@ public class SqlGraphConfiguration {
             DATASETFILES=String.valueOf(configProperties.getProperty("DatasetFiles"));
             VERTEXESOUTPUT=String.valueOf(configProperties.getProperty("VertexesOutput"));
             OUTGOINGLABELSMAPPING=String.valueOf(configProperties.getProperty("OutgoingLabelsMapping"));
+            INCOMINGLABELSMAPPING=String.valueOf(configProperties.getProperty("IncomingLabelsMapping"));
             TMPDIRECTORY=String.valueOf(configProperties.get("tmpFiles"));
 
         }   catch (IOException e)   {
@@ -38,6 +40,8 @@ public class SqlGraphConfiguration {
     public static String getVertexesOutput()    { return VERTEXESOUTPUT;}
 
     public static String getOutgoingLabelsMapping() {return OUTGOINGLABELSMAPPING;}
+
+    public static String getIncomingLabelsMapping() {return INCOMINGLABELSMAPPING;}
 
     public static String getTemporaryFilesDirectory()   {return TMPDIRECTORY;}
 }

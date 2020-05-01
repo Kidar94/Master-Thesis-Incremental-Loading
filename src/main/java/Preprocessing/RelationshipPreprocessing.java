@@ -67,7 +67,7 @@ public class RelationshipPreprocessing {
             if(bool)    {
                 attributes.add(attribute);
             }   else    {
-                attributeJson=null;
+                attributeJson="[NULL]";
             }
             int j=0;
             int indx2;

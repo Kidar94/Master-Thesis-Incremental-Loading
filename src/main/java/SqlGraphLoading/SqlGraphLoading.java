@@ -98,11 +98,17 @@ public class SqlGraphLoading {
         ArrayList<String>   relationshipList=relabelingOutput.get(1);
 
         String outgoingMappingCsvFile=sqlGraphConfiguration.getOutgoingLabelsMapping();
-        HashMap<String, Integer>    mappingLabelsColumns=new HashMap<>();
+        String incomingMappingCsvFile=sqlGraphConfiguration.getIncomingLabelsMapping();
+        HashMap<String, Integer>    mappingLabelsColumnsOutgoing=new HashMap<>();
+        HashMap<String, Integer>    mappingLabelsColumnsIncoming=new HashMap<>();
+
         BufferedReader  outgoingMappingReader=null;
+        BufferedReader incomingMappingReader=null;
 
         try {
             outgoingMappingReader= new BufferedReader(new FileReader(outgoingMappingCsvFile));
+            incomingMappingReader= new BufferedReader(new FileReader(incomingMappingCsvFile));
+
             String line="";
             String key="";
             String valueString="";
@@ -111,7 +117,14 @@ public class SqlGraphLoading {
                 indx=line.indexOf("|");
                 key=line.substring(0,indx);
                 valueString=line.substring(indx+1);
-                mappingLabelsColumns.put(key, Integer.valueOf(valueString));
+                mappingLabelsColumnsOutgoing.put(key, Integer.valueOf(valueString));
+            }
+
+            while((line=incomingMappingReader.readLine())!=null)   {
+                indx=line.indexOf("|");
+                key=line.substring(0,indx);
+                valueString=line.substring(indx+1);
+                mappingLabelsColumnsIncoming.put(key, Integer.valueOf(valueString));
             }
         }   catch(IOException e)    {
             e.printStackTrace();
@@ -119,9 +132,15 @@ public class SqlGraphLoading {
             if(outgoingMappingReader!=null) {
                 outgoingMappingReader.close();
             }
+            if(incomingMappingReader!=null) {
+                incomingMappingReader.close();
+            }
         }
         OALoading oaLoading=new OALoading();
-        oaLoading.OALoadingTable(vertexesOutput,relationshipList, mappingLabelsColumns, vertexesTypeIds);
+        oaLoading.OALoadingTable(vertexesOutput,relationshipList, mappingLabelsColumnsOutgoing, vertexesTypeIds);
+        IALoading iaLoading=new IALoading();
+        iaLoading.IALoadingTable(vertexesOutput,relationshipList, mappingLabelsColumnsIncoming, vertexesTypeIds);
+
 
         int debug;
         debug=1;

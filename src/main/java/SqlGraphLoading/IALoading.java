@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import Preprocessing.*;
 
-public class OALoading {
+public class IALoading {
 
     private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
     private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
 
-    public void OALoadingTable(String outputDirectory, ArrayList<String> relationshipList, HashMap<String, Integer> labelMapping, ArrayList<String> vertexIdsMapping)   throws IOException    {
+    public void IALoadingTable(String outputDirectory, ArrayList<String> relationshipList, HashMap<String, Integer> labelMapping, ArrayList<String> vertexIdsMapping)   throws IOException    {
         String vertexesIds;
         int indx;
         Long firstId;
@@ -27,18 +27,34 @@ public class OALoading {
         String vertexType2;
         int indx2;
         String label="";
-        ArrayList<String> OASubFiles= null;
+        ArrayList<String> IASubFiles= null;
         int numberOfColumns=labelMapping.get("numberOfColumns");
         HashMap<String, ArrayList<String>> labelsOccurence= null;
         ArrayList<String> pathList=null;
         File temporaryFile=null;
         String vertexType1;
         BufferedWriter bwOATable=null;
-        Long oa_id=0L;
+        ArrayList<String> relationshipList2= new ArrayList<>();
+        Long ia_id=0L;
+
+        for(String relationshipFilePath: relationshipList)  {
+            File relationshipFile=new File(relationshipFilePath);
+            String relationshipFileName=relationshipFile.getName();
+
+            File relationshipIngoingSorted = File.createTempFile(relationshipFileName, "IngoingSorted.csv", new File(tmpDirectory));
+            relationshipIngoingSorted.deleteOnExit();
+            vidIngoingComparator comparator = new vidIngoingComparator();
+            List<File> sortInBatch= ExternalSort.sortInBatch(relationshipFile, comparator);
+            ExternalSort.mergeSortedFiles(sortInBatch, relationshipIngoingSorted, comparator);
+            relationshipList2.add(relationshipIngoingSorted.getPath());
+        }
+        relationshipList= new ArrayList<>(relationshipList2);
+
+
 
 
         try {
-            String outputFileName=outputDirectory+"/OATable.csv";
+            String outputFileName=outputDirectory+"/IATable.csv";
             bwOATable=new BufferedWriter(new FileWriter(outputFileName));
             for(String vertexType:vertexIdsMapping) {
                 indx=vertexType.indexOf("|");
@@ -54,6 +70,10 @@ public class OALoading {
                     file1=new File(relationshipFile);
                     pathName=file1.getName();
                     indx2=pathName.indexOf("_");
+                    pathName=pathName.substring(indx2+1);
+                    indx2=pathName.indexOf("_");
+                    pathName=pathName.substring(indx2+1);
+                    indx2=pathName.indexOf("_");
                     vertexType2=pathName.substring(0,indx2);
 
                     if(vertexType.equals(vertexType2)) {
@@ -61,7 +81,6 @@ public class OALoading {
                     }
                 }
                 labelsOccurence= new HashMap<>();
-                pathList= new ArrayList<>();
                 for(String relationshipPath:relationplistByType)    {
                     indx2=relationshipPath.indexOf("_");
                     relationshipPath=relationshipPath.substring(indx2+1);
@@ -114,10 +133,10 @@ public class OALoading {
                         }
                         try {
                             String fileInputName=temporaryFile.getName();
-                            File tempFileOutput = File.createTempFile(fileInputName, "sorted.csv", new File(tmpDirectory));
+                            File tempFileOutput = File.createTempFile(fileInputName, "IngoingSorted.csv", new File(tmpDirectory));
                             tempFileOutput.deleteOnExit();
                             fileoutput=tempFileOutput.getPath();
-                            vidComparator comparator = new vidComparator();
+                            vidIngoingComparator comparator = new vidIngoingComparator();
                             List<File> sortInBatch= ExternalSort.sortInBatch(temporaryFile, comparator);
                             ExternalSort.mergeSortedFiles(sortInBatch, tempFileOutput, comparator);
                             relationplistByType.add(fileoutput);
@@ -127,11 +146,11 @@ public class OALoading {
                     }
                 }
 
-                OASubFiles= new ArrayList<>();
+                IASubFiles= new ArrayList<>();
                 for(String relationshipPath:relationplistByType)    {
                     file1=new File(relationshipPath);
-                    File tempFile= File.createTempFile(relationshipPath, "OAsubFile.csv",new File(tmpDirectory));
-                    OASubFiles.add(tempFile.getPath());
+                    File tempFile= File.createTempFile(relationshipPath, "IAsubFile.csv",new File(tmpDirectory));
+                    IASubFiles.add(tempFile.getPath());
                     tempFile.deleteOnExit();
                     label=file1.getName();
                     indx2=label.indexOf("_");
@@ -161,10 +180,10 @@ public class OALoading {
                             eid1=line.substring(0,indx3);
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
-                            vid1=line.substring(0,indx3);
+                            target1=line.substring(0,indx3);
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
-                            target1=line.substring(0,indx3);
+                            vid1=line.substring(0,indx3);
                             eidArray="["+eid1;
                             targetArray="["+target1;
 
@@ -175,10 +194,10 @@ public class OALoading {
                             eid2=line.substring(0,indx3);
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
-                            vid2=line.substring(0,indx3);
+                            target2=line.substring(0,indx3);
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
-                            target2=line.substring(0,indx3);
+                            vid2=line.substring(0,indx3);
                             if(vid1.equals(vid2))   {
                                 eidArray=eidArray+","+eid2;
                                 targetArray=targetArray+","+target2;
@@ -220,10 +239,10 @@ public class OALoading {
                 BufferedWriter bwAllRelationship=null;
                 File temprelationshipFiles=null;
                 try {
-                    temprelationshipFiles=File.createTempFile(vertexType1+"relationships",".csv", new File(tmpDirectory));
+                    temprelationshipFiles=File.createTempFile(vertexType1+"IngoingRelationships",".csv", new File(tmpDirectory));
                     bwAllRelationship= new BufferedWriter(new FileWriter(temprelationshipFiles));
 
-                    for(String path:OASubFiles)  {
+                    for(String path:IASubFiles)  {
                         BufferedReader brSubFile=null;
                         try {
                             brSubFile=new BufferedReader(new FileReader(path));
@@ -254,7 +273,7 @@ public class OALoading {
                 }
 
                 String fileInputName=temprelationshipFiles.getName();
-                File tempFileOutput = File.createTempFile(fileInputName, "sorted.csv", new File(tmpDirectory));
+                File tempFileOutput = File.createTempFile(fileInputName, "IngoingSorted.csv", new File(tmpDirectory));
                 tempFileOutput.deleteOnExit();
                 fileoutput=tempFileOutput.getPath();
                 vidComparator2 comparator = new vidComparator2();
@@ -277,7 +296,7 @@ public class OALoading {
                 try {
                     br= new BufferedReader(new FileReader(fileoutput));
 
-                    File tempFile = File.createTempFile(fileInputName, "OASubTable.csv", new File(tmpDirectory));
+                    File tempFile = File.createTempFile(fileInputName, "IASubTable.csv", new File(tmpDirectory));
                     tempFileOutput.deleteOnExit();
                     bw= new BufferedWriter(new FileWriter(tempFile));
                     String linesToWriteStringEmpty="";
@@ -330,10 +349,10 @@ public class OALoading {
                             linesToWriteString=linesToWriteString+linesToWrite.get(k);
                         }
                         while(!(idLine.equals(id.toString()))&&(id<=lastId))  {
-                            bwOATable.write(oa_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
+                            bwOATable.write(ia_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
                             bwOATable.newLine();
                             id++;
-                            oa_id++;
+                            ia_id++;
                         }
                         if(id>lastId)   {
                             boolId=false;
@@ -341,16 +360,16 @@ public class OALoading {
 
                         //bw.write(idLine+linesToWriteString);
                         //bw.newLine();
-                        bwOATable.write(oa_id.toString()+"|"+idLine+linesToWriteString);
+                        bwOATable.write(ia_id.toString()+"|"+idLine+linesToWriteString);
                         bwOATable.newLine();
                         id++;
-                        oa_id++;
+                        ia_id++;
                     }
                     while (id<=lastId)  {
-                        bwOATable.write(oa_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
+                        bwOATable.write(ia_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
                         bwOATable.newLine();
                         id++;
-                        oa_id++;
+                        ia_id++;
                     }
 
                 }   catch (IOException e)   {

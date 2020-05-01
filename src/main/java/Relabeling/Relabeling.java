@@ -16,10 +16,6 @@ public class Relabeling {
     public ArrayList<ArrayList> attributingNewIds(ArrayList<String> filesToMerge, String vertexesOutput, HashMap<String, ArrayList> relationshipPerVertexType, ArrayList<String> relationshipNamesList)  throws IOException {
         BufferedWriter bw = null;
         BufferedReader br = null;
-        BufferedReader brRelationships=null;
-        BufferedWriter bwRelationships=null;
-        String mergeVertexes = vertexesOutput + "/vertexes.csv";
-        ArrayList<String> outputFiles= new ArrayList<>();
         String id="";
         Long i = 0L;
         RelationshipRelabeling relationshipRelabeling= new RelationshipRelabeling();
@@ -137,7 +133,7 @@ public class Relabeling {
                     int indexName2=fileName2.indexOf("_", indexName+1);
                     int indexName3=fileName2.indexOf("_", indexName2+1);
                     String relationshipName=fileName2.substring(0,indexName3);
-                    File tempFileOutput=file.createTempFile(relationshipName, "relabeled.csv", new File(tmpDirectory));
+                    File tempFileOutput=file.createTempFile(relationshipName+"_", "relabeled.csv", new File(tmpDirectory));
                     tempFileOutput.deleteOnExit();
                     String path=tempFileOutput.getPath();
                     bwEdgesSubFile= new BufferedWriter(new FileWriter(path));
