@@ -184,8 +184,8 @@ public class IALoading {
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
                             vid1=line.substring(0,indx3);
-                            eidArray="["+eid1;
-                            targetArray="["+target1;
+                            eidArray=""+eid1;
+                            targetArray=""+target1;
 
                         }
 
@@ -202,14 +202,14 @@ public class IALoading {
                                 eidArray=eidArray+","+eid2;
                                 targetArray=targetArray+","+target2;
                             }   else    {
-                                eidArray=eidArray+"]";
-                                targetArray=targetArray+"]";
+                                eidArray=eidArray+"";
+                                targetArray=targetArray+"";
                                 newLine=vid1+"|"+eidArray+"|"+label+"|"+targetArray;
                                 vid1=vid2;
                                 eid1=eid2;
                                 target1=target2;
-                                eidArray="["+eid1;
-                                targetArray="["+target1;
+                                eidArray=""+eid1;
+                                targetArray=""+target1;
 
                                 bwSubType.write(newLine);
                                 bwSubType.newLine();
@@ -217,8 +217,8 @@ public class IALoading {
 
                         }
                         if(vid1!="") {
-                            eidArray=eidArray+"]";
-                            targetArray=targetArray+"]";
+                            eidArray=eidArray+"";
+                            targetArray=targetArray+"";
                             newLine=vid1+"|"+eidArray+"|"+label+"|"+targetArray;
                             bwSubType.write(newLine);
                             bwSubType.newLine();
@@ -251,8 +251,6 @@ public class IALoading {
                                 bwAllRelationship.write(line);
                                 bwAllRelationship.newLine();
                             }
-
-
                         }   catch(IOException e)    {
                             e.printStackTrace();
                         }   finally {
@@ -260,10 +258,7 @@ public class IALoading {
                                 brSubFile.close();
                             }
                         }
-
                     }
-
-
                 }   catch (IOException e)   {
                     e.printStackTrace();
                 }   finally {
@@ -302,7 +297,7 @@ public class IALoading {
                     String linesToWriteStringEmpty="";
 
                     for(int j=0; j<numberOfColumns; j++)    {
-                        linesToWriteStringEmpty=linesToWriteStringEmpty+"|null|null|null";
+                        linesToWriteStringEmpty=linesToWriteStringEmpty+"|-1|NULL|-1";
                     }
 
                     line=br.readLine();
@@ -322,7 +317,7 @@ public class IALoading {
 
                         String linesToWriteString="";
                         for(int j=0; j<numberOfColumns; j++)    {
-                            linesToWrite.add("|null|null|null");
+                            linesToWrite.add("|-1|NULL|-1");
                         }
 
                         while(idLine.equals(idLine2)&&idLine!=""&&boolReadLine)   {

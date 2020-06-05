@@ -3,16 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1bf7465c-f0d2-4bc1-99f9-80182f169727" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Configuration/SqlGraphConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Configuration/SqlGraphConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Preprocessing/RelationshipPreprocessing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Preprocessing/RelationshipPreprocessing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Relabeling/Relabeling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Relabeling/Relabeling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/IALoading.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/IALoading.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/OALoading.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/OALoading.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/SqlGraphLoading.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SqlGraphLoading/SqlGraphLoading.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Configuration/SqlGraphConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Configuration/SqlGraphConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Relabeling/Relabeling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Relabeling/Relabeling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SqlGraphLoading/IALoading.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SqlGraphLoading/IALoading.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/SqlGraphLoading/OALoading.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SqlGraphLoading/OALoading.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SqlGraphLoading/SqlGraphLoading.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/SqlGraphLoading/SqlGraphLoading.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +239,19 @@
       <workItem from="1587991939363" duration="3789000" />
       <workItem from="1588121307417" duration="9388000" />
       <workItem from="1588169073403" duration="7076000" />
-      <workItem from="1588339710846" duration="4833000" />
+      <workItem from="1588339710846" duration="6586000" />
+      <workItem from="1588351293331" duration="661000" />
+      <workItem from="1589457611858" duration="1238000" />
+      <workItem from="1590392212288" duration="1958000" />
+      <workItem from="1590477912839" duration="5380000" />
+      <workItem from="1590568215663" duration="598000" />
+      <workItem from="1590653487181" duration="2437000" />
+      <workItem from="1590768547105" duration="1529000" />
+      <workItem from="1590935912471" duration="1908000" />
+      <workItem from="1591087542621" duration="1198000" />
+      <workItem from="1591214691101" duration="917000" />
+      <workItem from="1591277988299" duration="1246000" />
+      <workItem from="1591355839618" duration="3714000" />
     </task>
     <servers />
   </component>
@@ -256,10 +263,6 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="2" key="#Notifications/0.0.1280.680@0.0.1280.680" timestamp="1583665631425" />
-    <state x="233" y="2" key="#Project_Structure" timestamp="1582712441866">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="233" y="2" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1582712441866" />
     <state x="2610" y="278" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1586511944998">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -268,10 +271,6 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1583507686380" />
-    <state x="446" y="50" key="#com.intellij.ide.util.MemberChooser" timestamp="1582643764091">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="446" y="50" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1582643764091" />
     <state x="443" y="210" width="394" height="265" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1588340849438">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -288,12 +287,11 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2514" y="76" key="#xdebugger.evaluate/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1586534684636" />
-    <state x="396" y="50" key="#xdebugger.evaluate/0.0.1280.680@0.0.1280.680" timestamp="1581960178277" />
-    <state width="508" height="305" key="DebuggerActiveHint" timestamp="1588340993068">
+    <state width="508" height="305" key="DebuggerActiveHint" timestamp="1591360801721">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="508" height="305" key="DebuggerActiveHint/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588340993068" />
-    <state width="553" height="466" key="DebuggerActiveHint/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588207785571" />
+    <state width="508" height="305" key="DebuggerActiveHint/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1591360801721" />
+    <state width="553" height="466" key="DebuggerActiveHint/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588350369074" />
     <state x="2660" y="278" key="FileChooserDialogImpl" timestamp="1585314829449">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -314,32 +312,32 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1237" height="96" key="GridCell.Tab.-1.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1586021721604" />
-    <state width="1877" height="244" key="GridCell.Tab.0.bottom" timestamp="1588347318464">
+    <state width="1877" height="141" key="GridCell.Tab.0.bottom" timestamp="1591376318247">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="244" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588342436663" />
-    <state width="1877" height="244" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588347318464" />
+    <state width="1237" height="141" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1591361441143" />
+    <state width="1877" height="141" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1591376318247" />
     <state width="1877" height="268" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1588214532735" />
     <state width="1877" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586385640832" />
-    <state width="1877" height="244" key="GridCell.Tab.0.center" timestamp="1588347318463">
+    <state width="1877" height="141" key="GridCell.Tab.0.center" timestamp="1591376318246">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="244" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588342436663" />
-    <state width="1877" height="244" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588347318463" />
+    <state width="1237" height="141" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1591361441142" />
+    <state width="1877" height="141" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1591376318246" />
     <state width="1877" height="268" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1588214532735" />
     <state width="1877" height="261" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586385640832" />
-    <state width="1877" height="244" key="GridCell.Tab.0.left" timestamp="1588347318463">
+    <state width="1877" height="141" key="GridCell.Tab.0.left" timestamp="1591376318246">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="244" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588342436663" />
-    <state width="1877" height="244" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588347318463" />
+    <state width="1237" height="141" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1591361441142" />
+    <state width="1877" height="141" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1591376318246" />
     <state width="1877" height="268" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1588214532735" />
     <state width="1877" height="261" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586385640832" />
-    <state width="1877" height="244" key="GridCell.Tab.0.right" timestamp="1588347318464">
+    <state width="1877" height="141" key="GridCell.Tab.0.right" timestamp="1591376318246">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="244" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588342436663" />
-    <state width="1877" height="244" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1588347318464" />
+    <state width="1237" height="141" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1591361441143" />
+    <state width="1877" height="141" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1591376318246" />
     <state width="1877" height="268" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1588214532735" />
     <state width="1877" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586783230587" />
     <state width="1237" height="13" key="GridCell.Tab.1.bottom" timestamp="1586020378519">
@@ -366,34 +364,27 @@
     <state width="1237" height="13" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1586020378519" />
     <state width="1877" height="281" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1586016334942" />
     <state width="1237" height="224" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1585217619588" />
-    <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1582646855686">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.680@0.0.1280.680" timestamp="1582646855686" />
     <state x="2276" y="112" key="SettingsEditor" timestamp="1587597188653">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2276" y="112" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587597188653" />
-    <state x="121" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1581949532832" />
     <state width="971" height="531" key="XDebugger.FullValuePopup" timestamp="1586187406841">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state width="971" height="531" key="XDebugger.FullValuePopup/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1586187406841" />
-    <state width="647" height="347" key="XDebugger.FullValuePopup/0.0.1280.680@0.0.1280.680" timestamp="1582538133121" />
     <state x="2886" y="312" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587669603559">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2886" y="312" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587669603559" />
-    <state x="2558" y="273" width="833" height="553" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1587944070205">
+    <state x="2558" y="273" width="833" height="553" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1591355981294">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="349" y="127" width="833" height="553" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1587821496446" />
-    <state x="2558" y="273" width="872" height="554" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1587944070205" />
+    <state x="2558" y="273" width="872" height="554" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1591355981294" />
     <state x="91" y="45" key="new project wizard" timestamp="1587386561774">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="91" y="45" key="new project wizard/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1587386561774" />
-    <state x="91" y="45" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1581612869961" />
     <state x="2366" y="231" key="run.anything.popup" timestamp="1586186455346">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -438,29 +429,29 @@
           <line>145</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/main.java</url>
-          <line>9</line>
-          <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlGraphLoading/IALoading.java</url>
-          <line>350</line>
+          <line>345</line>
           <option name="timeStamp" value="163" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlGraphLoading/SqlGraphLoading.java</url>
           <line>138</line>
           <option name="timeStamp" value="164" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlGraphLoading/SqlGraphLoading.java</url>
           <line>94</line>
           <option name="timeStamp" value="167" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/main.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
-        <breakpoint type="java-exception">
+        <breakpoint enabled="true" type="java-exception">
           <properties>
             <option name="NOTIFY_CAUGHT" value="false" />
           </properties>
