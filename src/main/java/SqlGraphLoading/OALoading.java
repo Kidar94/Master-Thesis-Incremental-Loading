@@ -15,6 +15,7 @@ public class OALoading {
 
     private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
     private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
+    private String arrayLengthString=sqlGraphConfiguration.getArrayLength();
 
     public void OALoadingTable(String outputDirectory, ArrayList<String> relationshipList, HashMap<String, Integer> labelMapping, ArrayList<String> vertexIdsMapping)   throws IOException    {
         String vertexesIds;
@@ -35,7 +36,7 @@ public class OALoading {
         String vertexType1;
         BufferedWriter bwOATable=null;
         Long oa_id=0L;
-
+        Integer arrayLength=Integer.valueOf(arrayLengthString);
 
         try {
             String outputFileName=outputDirectory+"/OATable.csv";
@@ -151,6 +152,7 @@ public class OALoading {
                     String newLine="";
                     String eidArray="";
                     String targetArray="";
+                    int cnter=1;
                     try {
                         br= new BufferedReader(new FileReader(relationshipPath));
                         bwSubType= new BufferedWriter(new FileWriter(tempFile));
@@ -179,7 +181,9 @@ public class OALoading {
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
                             target2=line.substring(0,indx3);
-                            if(vid1.equals(vid2))   {
+
+                            if((vid1.equals(vid2))&&cnter<arrayLength)   {
+                                cnter++;
                                 eidArray=eidArray+","+eid2;
                                 targetArray=targetArray+","+target2;
                             }   else    {
@@ -191,7 +195,7 @@ public class OALoading {
                                 target1=target2;
                                 eidArray=""+eid1;
                                 targetArray=""+target1;
-
+                                cnter=1;
                                 bwSubType.write(newLine);
                                 bwSubType.newLine();
                             }
@@ -271,7 +275,7 @@ public class OALoading {
                 String labelLine;
                 int labelColumnNumber;
                 int indxLine;
-                Long id=firstId;
+                Long id=firstId-1;
                 Boolean boolReadLine=false;
                 Boolean boolId=true;
                 try {
@@ -291,40 +295,76 @@ public class OALoading {
                         boolReadLine=true;
                     }
 
+                    ArrayList<String> linesToWriteInNextLine= new ArrayList<>();
 
                     while(boolReadLine&& boolId) {
-
-                        if(line!=null)  {
-                            idLine=line.substring(0,line.indexOf("|"));
-                        }
-                        idLine2=idLine;
-
                         ArrayList<String> linesToWrite= new ArrayList<>();
+                        ArrayList<String> linesToWriteInNextLine2= new ArrayList<>();
+
 
                         String linesToWriteString="";
                         for(int j=0; j<numberOfColumns; j++)    {
                             linesToWrite.add("|-1|NULL|-1");
                         }
 
-                        while(idLine.equals(idLine2)&&idLine!=""&&boolReadLine)   {
-                            line2=line;
-                            indxLine=line2.indexOf("|");
-                            line2=line2.substring(indxLine+1);
-                            line=line.substring(indxLine);
-                            indxLine=line2.indexOf("|");
-                            line2=line2.substring(indxLine+1);
-                            indxLine=line2.indexOf("|");
-                            labelLine=line2.substring(0,indxLine);
-                            labelColumnNumber=labelMapping.get(labelLine);
-                            linesToWrite.set(labelColumnNumber,line);
-                            line=br.readLine();
+                        if(!(linesToWriteInNextLine.isEmpty())) {
+
+                            for(String item:linesToWriteInNextLine) {
+                                line2=item;
+                                indxLine=line2.indexOf("|");
+                                line2=line2.substring(indxLine+1);
+                                item=item.substring(indxLine);
+                                indxLine=line2.indexOf("|");
+                                line2=line2.substring(indxLine+1);
+                                indxLine=line2.indexOf("|");
+                                labelLine=line2.substring(0,indxLine);
+                                labelColumnNumber=labelMapping.get(labelLine);
+
+                                if(linesToWrite.get(labelColumnNumber).equals("|-1|NULL|-1"))   {
+                                    linesToWrite.set(labelColumnNumber,item);
+                                }   else    {
+                                    linesToWriteInNextLine2.add(item);
+                                }
+                            }
+
+                            linesToWriteInNextLine=linesToWriteInNextLine2;
+
+
+                        }   else    {
+                            id++;
+
                             if(line!=null)  {
-                                idLine2=line.substring(0,line.indexOf("|"));
-                            }   else {
-                                boolReadLine=false;
+                                idLine=line.substring(0,line.indexOf("|"));
+                            }
+                            idLine2=idLine;
+
+                            while(idLine.equals(idLine2)&&idLine!=""&&boolReadLine)   {
+                                line2=line;
+                                indxLine=line2.indexOf("|");
+                                line2=line2.substring(indxLine+1);
+                                line=line.substring(indxLine);
+                                indxLine=line2.indexOf("|");
+                                line2=line2.substring(indxLine+1);
+                                indxLine=line2.indexOf("|");
+                                labelLine=line2.substring(0,indxLine);
+                                labelColumnNumber=labelMapping.get(labelLine);
+
+
+
+                                if(linesToWrite.get(labelColumnNumber).equals("|-1|NULL|-1"))   {
+                                    linesToWrite.set(labelColumnNumber,line);
+                                }   else    {
+                                    linesToWriteInNextLine.add(line);
+                                }
+
+                                line=br.readLine();
+                                if(line!=null)  {
+                                    idLine2=line.substring(0,line.indexOf("|"));
+                                }   else {
+                                    boolReadLine=false;
+                                }
                             }
                         }
-
 
                         for (int k=0; k<linesToWrite.size();k++)    {
                             linesToWriteString=linesToWriteString+linesToWrite.get(k);
@@ -332,8 +372,8 @@ public class OALoading {
                         while(!(idLine.equals(id.toString()))&&(id<=lastId))  {
                             bwOATable.write(oa_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
                             bwOATable.newLine();
-                            id++;
                             oa_id++;
+                            id++;
                         }
                         if(id>lastId)   {
                             boolId=false;
@@ -343,14 +383,13 @@ public class OALoading {
                         //bw.newLine();
                         bwOATable.write(oa_id.toString()+"|"+idLine+linesToWriteString);
                         bwOATable.newLine();
-                        id++;
                         oa_id++;
                     }
                     while (id<=lastId)  {
                         bwOATable.write(oa_id.toString()+"|"+id.toString()+linesToWriteStringEmpty);
                         bwOATable.newLine();
-                        id++;
                         oa_id++;
+                        id++;
                     }
 
                 }   catch (IOException e)   {

@@ -15,6 +15,7 @@ public class IALoading {
 
     private SqlGraphConfiguration sqlGraphConfiguration= new SqlGraphConfiguration();
     private String tmpDirectory=sqlGraphConfiguration.getTemporaryFilesDirectory();
+    private String arrayLengthString=sqlGraphConfiguration.getArrayLength();
 
     public void IALoadingTable(String outputDirectory, ArrayList<String> relationshipList, HashMap<String, Integer> labelMapping, ArrayList<String> vertexIdsMapping)   throws IOException    {
         String vertexesIds;
@@ -36,6 +37,7 @@ public class IALoading {
         BufferedWriter bwOATable=null;
         ArrayList<String> relationshipList2= new ArrayList<>();
         Long ia_id=0L;
+        Integer arrayLength=Integer.valueOf(arrayLengthString);
 
         for(String relationshipFilePath: relationshipList)  {
             File relationshipFile=new File(relationshipFilePath);
@@ -170,6 +172,7 @@ public class IALoading {
                     String newLine="";
                     String eidArray="";
                     String targetArray="";
+                    int cnter=1;
                     try {
                         br= new BufferedReader(new FileReader(relationshipPath));
                         bwSubType= new BufferedWriter(new FileWriter(tempFile));
@@ -198,7 +201,8 @@ public class IALoading {
                             line=line.substring(indx3+1);
                             indx3=line.indexOf("|");
                             vid2=line.substring(0,indx3);
-                            if(vid1.equals(vid2))   {
+                            if(vid1.equals(vid2)&&(cnter<arrayLength))   {
+                                cnter++;
                                 eidArray=eidArray+","+eid2;
                                 targetArray=targetArray+","+target2;
                             }   else    {
@@ -210,7 +214,7 @@ public class IALoading {
                                 target1=target2;
                                 eidArray=""+eid1;
                                 targetArray=""+target1;
-
+                                cnter=1;
                                 bwSubType.write(newLine);
                                 bwSubType.newLine();
                             }

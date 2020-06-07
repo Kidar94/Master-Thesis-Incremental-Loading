@@ -13,6 +13,7 @@ public class SqlGraphConfiguration {
     private static String OUTGOINGLABELSMAPPING;
     private static String INCOMINGLABELSMAPPING;
     private static String TMPDIRECTORY;
+    private static String ARRAYLENGTH;
     public SqlGraphConfiguration()  {
         Properties configProperties= new Properties();
         FileInputStream in=null;
@@ -25,6 +26,7 @@ public class SqlGraphConfiguration {
             OUTGOINGLABELSMAPPING=String.valueOf(configProperties.getProperty("OutgoingLabelsMapping"));
             INCOMINGLABELSMAPPING=String.valueOf(configProperties.getProperty("IncomingLabelsMapping"));
             TMPDIRECTORY=String.valueOf(configProperties.get("tmpFiles"));
+            ARRAYLENGTH=String.valueOf(configProperties.get("arrayLength"));
 
         }   catch (IOException e)   {
             e.printStackTrace();
@@ -44,4 +46,5 @@ public class SqlGraphConfiguration {
     public static String getIncomingLabelsMapping() {return INCOMINGLABELSMAPPING;}
 
     public static String getTemporaryFilesDirectory()   {return TMPDIRECTORY;}
+    public static String getArrayLength()   {return ARRAYLENGTH;}
 }
